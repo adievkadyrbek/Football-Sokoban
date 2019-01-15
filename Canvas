@@ -1,0 +1,119 @@
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.awt.Image;
+
+public class Canvas extends JPanel {
+
+    private Model model;
+    private Image imageMessi;
+    private Image imageFans;
+    private Image imageFansRight;
+    private Image imageFansLeft;
+    private Image imageFansBottom;
+    private Image imageGoalie;
+    private Image imageBall;
+    private Image imageDefender;
+    private Image imageGrass;
+
+    public Canvas(Model model) {
+    	this.model = model;
+	setBackground(Color.darkGray);
+
+	File fileNameMessi = new File("images/messi.jpg");
+	File fileNameFansRight = new File("images/fans - right.jpg");
+	File fileNameFansLeft = new File("images/fans - left.jpg");
+	File fileNameFansBottom = new File("images/fans - bottom.jpg");
+	File fileNameFans = new File("images/fans.jpg");
+	File fileNameBall = new File("images/ball.jpg");
+	File fileNameGoalie = new File("images/goalie.jpg");
+	File fileNameDefender = new File("images/defender.jpg");
+	File fileNameGrass = new File("images/grass.jpg");
+
+	try {
+		imageMessi = ImageIO.read(fileNameMessi);
+		imageFans = ImageIO.read(fileNameFans);
+		imageFansRight = ImageIO.read(fileNameFansRight);
+		imageFansLeft = ImageIO.read(fileNameFansLeft);
+		imageFansBottom = ImageIO.read(fileNameFansBottom);
+		imageGoalie = ImageIO.read(fileNameGoalie);
+		imageBall = ImageIO.read(fileNameBall);
+		imageDefender = ImageIO.read(fileNameDefender);
+		imageGrass = ImageIO.read(fileNameGrass);
+	} catch(IOException e) {
+		System.out.println(e);
+	}
+    }    
+
+    public void paint(Graphics g) {
+
+    	super.paint(g);
+	if(model.getStartDesktop()) {
+		drawDesktop(g);
+	} else {
+		g.setColor(Color.white);
+		g.setFont(new Font("Impact", Font.BOLD, 40));
+		g.drawString("Error Initialization", 250, 330);
+
+	}
+    }
+
+    private void drawDesktop(Graphics g) {
+
+	int x = 60;
+	int y = 30;
+	int width = 60;
+	int height = 60;
+	int offset = 2;
+
+	for(int i = 0; i < model.desktop.length; i++) {
+		for(int j = 0; j < model.desktop[i].length; j++) {
+			if(model.desktop[i][j] == 1) {
+				g.setColor(Color.green);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageMessi, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 2) {
+				g.setColor(Color.white);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageFans, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 6) {
+				g.setColor(Color.white);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageFansRight, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 7) {
+				g.setColor(Color.white);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageFansLeft, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 8) {
+				g.setColor(Color.white);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageFansBottom, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 3) {
+				g.setColor(Color.green);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageBall, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 4) {
+				g.setColor(Color.green);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageGoalie, x, y, 60, 60, null);
+			} else if(model.desktop[i][j] == 5) {
+				g.setColor(Color.green);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageDefender, x, y, 60, 60, null);
+			} else {
+				g.setColor(Color.green);
+				g.drawRect(x, y, width, height);
+				g.drawImage(imageGrass, x, y, 60, 60, null);
+			}
+			x += width + offset;
+		}
+		x = 60;
+		y += height + offset;
+	}		
+    }
+}
