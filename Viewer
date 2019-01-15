@@ -1,0 +1,24 @@
+import javax.swing.JFrame;
+
+public class Viewer {
+
+    private Canvas canvas;
+
+    Viewer() {
+
+    	Controller controller = new Controller(this);
+	Model model = controller.getModel();
+	canvas = new Canvas(model); 
+
+	JFrame frame = new JFrame("Sokoban");
+	frame.addKeyListener(controller);
+	frame.setSize(1050, 730);
+	frame.setLocation(250, 10);
+	frame.add("Center", canvas);
+	frame.setVisible(true);
+    }
+
+    public void updateCanvas() {
+    	canvas.repaint();
+    }
+}
